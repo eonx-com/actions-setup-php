@@ -134,7 +134,7 @@ Function Add-Composer-Tool() {
     [string]
     $prefix
   )
-  composer -q global require $prefix$release 2>&1 | out-null
+  composer -q global require $prefix$release 
   if($?) {
     $composer_dir = composer -q global config home | ForEach-Object { $_ -replace "/", "\" }
     Add-Content -Path $PsHome\profile.ps1 -Value "New-Alias $tool $composer_dir\vendor\bin\$tool.bat"
@@ -179,10 +179,10 @@ if ($null -eq $installed -or -not("$($installed.Version).".StartsWith(($version 
     $version = 'master'
   }
 
-  Install-Php -Version $version -Architecture $arch -ThreadSafe $true -InstallVC -Path $php_dir -TimeZone UTC -InitialPhpIni Production -Force >$null 2>&1
+  Install-Php -Version $version -Architecture $arch -ThreadSafe $true -InstallVC -Path $php_dir -TimeZone UTC -InitialPhpIni Production -Force 
 }
 else {
-  Update-Php $php_dir >$null 2>&1
+  Update-Php $php_dir 
 }
 
 $installed = Get-Php -Path $php_dir
